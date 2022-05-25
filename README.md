@@ -1,6 +1,6 @@
 # 校医院服务平台
 
-> University Hospital service platform: UHSP
+> University Hospital Service Platform: UHSP
 >
 > 基于Springboot的后端服务，基于微信小程序的前端服务。普通用户、医生、管理员三端统一，使用微信的唯一标识符openid实现免密登录。
 
