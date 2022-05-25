@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.njtech.uhsp.dao.DoctorDao">
+    <resultMap id="doctorMap" type="com.njtech.uhsp.entity.Doctor">
+        <id column="id" property="id"/>
+        <result column="depart_id" property="departId"/>
+        <result column="rank_id" property="rankId"/>
+        <result column="introduce" property="introduce"/>
+        <association property="userInfo" javaType="com.njtech.uhsp.entity.UserInfo">
+            <id column="id" property="id"/>
+            <result column="real_name" property="realName"/>
+            <result column="phone" property="phone"/>
+            <result column="age" property="age"/>
+            <result column="sex" property="sex"/>
+        </association>
+        <association property="rank" javaType="com.njtech.uhsp.entity.Rank">
+            <id column="rank_id" property="id"/>
+            <result column="rank_name" property="rankName"/>
+            <result column="price" property="price"/>
+        </association>
+        <association property="depart" javaType="com.njtech.uhsp.entity.Depart">
+            <id column="depart_id" property="id"/>
+            <result column="depart_name" property="departName"/>
+        </association>
+        <association property="schedule" javaType="com.njtech.uhsp.entity.Schedule">
+            <id column="schedule_id" property="id"/>
+            <result column="doctor_id" property="doctorId"/>
+            <result column="day" property="day"/>
+            <result column="remain_am" property="remainAm"/>
+            <result column="remain_pm" property="remainPm"/>
+            <result column="default_remain_am" property="defaultRemainAm"/>
+            <result column="default_remain_pm" property="defaultRemainPm"/>
+        </association>
+    </resultMap>
+
+    <select id="find" resultMap="doctorMap">
+        select
+        doctor.*,
+        rank.id rank_id, rank.rank_name, rank.price,
+        depart.id depart_id, depart.depart_name,
+        user_info.id, user_info.real_name, user_info.phone, user_info.age, user_info.sex
+        from doctor
+        left join rank on doctor.rank_id = rank.id
+        left join depart on doctor.depart_id = depart.id
+        left join user_info on doctor.id = user_info.id
+        <where>
+            1 = 1
+            <if test="id!=null and id!=''">
+                and doctor.id = #{id}
+            </if>
+            <if test="departId!=null and departId!=''">
+                and doctor.depart_id = #{departId}
+            </if>
+        </where>
+    </select>
+
+    <select id="findAllByDepartId" resultMap="doctorMap">
+        select
+        doctor.*,
+        rank.id rank_id, rank.rank_name, rank.price,
+        depart.id depart_id, depart.depart_name,
+        user_info.id, user_info.real_name, user_info.phone, user_info.age, user_info.sex
+        from doctor
+        left join rank on doctor.rank_id = rank.id
+        left join depart on doctor.depart_id = depart.id
+        left join user_info on doctor.id = user_info.id
+        <where>
+            doctor.depart_id = #{departId}
+        </where>
+    </select>
+
+    <select id="findAllAvlByDepartId" resultMap="doctorMap">
+        select
+        doctor.*,
+        rank.id rank_id, rank.rank_name, rank.price,
+        depart.id depart_id, depart.depart_name,
+        user_info.id, user_info.real_name, user_info.phone, user_info.age, user_info.sex,
+        schedule.id schedule_id, schedule.doctor_id, schedule.day, schedule.remain_am, schedule.remain_pm,
+        schedule.default_remain_am, schedule.default_remain_pm
+        from doctor
+        left join rank on doctor.rank_id = rank.id
+        left join depart on doctor.depart_id = depart.id
+        left join user_info on doctor.id = user_info.id
+        left join schedule on doctor.id = schedule.doctor_id
+        <where>
+            doctor.depart_id = #{departId}
+            and schedule.day = #{week}
+        </where>
+    </select>
+</mapper>

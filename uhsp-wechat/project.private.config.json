@@ -1,0 +1,112 @@
+{
+  "setting": {
+    "compileHotReLoad": true,
+    "urlCheck": false
+  },
+  "condition": {
+    "miniprogram": {
+      "list": [
+        {
+          "name": "me",
+          "pathName": "pages/me/me",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "userinfo",
+          "pathName": "pages/userInfo/userInfo",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "新闻管理",
+          "pathName": "rootPackage/pages/news_manage/news_manage",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "今日挂号",
+          "pathName": "pages/registry/registry",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "在线缴费",
+          "pathName": "pages/pay/pay",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "我的挂号",
+          "pathName": "pages/registryList/registryList",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "医生问诊",
+          "pathName": "doctorPackage/pages/diagnose/diagnose",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "我的处方",
+          "pathName": "pages/presList/presList",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "检查管理",
+          "pathName": "rootPackage/pages/inspect_manage/inspect_manage",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "检查结果",
+          "pathName": "pages/inspection/inspection",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "医保报销",
+          "pathName": "pages/reimburse/reimburse",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "医保进度管理",
+          "pathName": "rootPackage/pages/reimburse_manage/reimburse_manage",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "医保进度",
+          "pathName": "pages/reimburse_pro/reimburse_pro",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "大数据",
+          "pathName": "pages/stat/stat",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        }
+      ]
+    }
+  },
+  "projectname": "uhsp-wechat",
+  "description": "项目私有配置文件。此文件中的内容将覆盖 project.config.json 中的相同字段。项目的改动优先同步到此文件中。详见文档：https://developers.weixin.qq.com/miniprogram/dev/devtools/projectconfig.html"
+}

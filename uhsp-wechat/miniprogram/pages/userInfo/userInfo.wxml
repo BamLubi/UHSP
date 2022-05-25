@@ -1,0 +1,42 @@
+<!--pages/userInfo/userInfo.wxml-->
+<form>
+  <view class="cu-form-group margin-top">
+    <view class="title">昵称</view>
+    <input value="{{userInfo.userName}}" placeholder="{{userInfo.userName}}" bindinput="userNameInput"></input>
+  </view>
+  <view class="cu-form-group">
+    <view class="title">真实姓名</view>
+    <input value="{{userInfo.realName}}" placeholder="{{userInfo.realName == null ? '请输入真实姓名' : userInfo.realName}}" bindinput="realNameInput"></input>
+  </view>
+  <view class="cu-form-group">
+    <view class="title">年龄</view>
+    <input value="{{userInfo.age}}" placeholder="{{userInfo.age == null ? '请输入年龄' : userInfo.age}}" type="number" bindinput="ageInput"></input>
+  </view>
+  <view class="cu-form-group">
+    <view class="title">性别</view>
+    <switch class="switch-sex" checked="{{!userInfo.sex}}" bindchange="sexChange"></switch>
+  </view>
+  <view class="cu-form-group">
+    <view class="title">电话</view>
+    <input value="{{userInfo.phone}}" placeholder="{{userInfo.phone == null ? '请输入电话' : userInfo.phone}}" bindinput="phoneInput"></input>
+  </view>
+  <view class="cu-form-group">
+    <view class="title">住址</view>
+    <input value="{{userInfo.address}}" placeholder="{{userInfo.address == null ? '请输入住址' : userInfo.address}}" bindinput="addressInput"></input>
+  </view>
+  
+  <view class="cu-form-group margin-top">
+    <view class="title">身份证</view>
+    <input value="{{userInfo.idCard}}" placeholder="{{userInfo.idCard == null ? '请输入身份证号码' : userInfo.idCard}}" bindinput="idCardInput"></input>
+  </view>
+  <view class="cu-form-group">
+    <view class="title">医保卡</view>
+    <input value="{{userInfo.medCard}}" placeholder="{{userInfo.medCard == null ? '请输入医保卡' : userInfo.medCard}}" bindinput="medCardInput"></input>
+  </view>
+  <!-- 按钮组 -->
+  <view class="btn-group">
+    <view class="cu-btn shadow bg-blue lg round" bindtap="confirm">确认</view>
+    <view class="cu-btn shadow bg-green lg round" bindtap="confirm">取消</view>
+  </view>
+
+</form>

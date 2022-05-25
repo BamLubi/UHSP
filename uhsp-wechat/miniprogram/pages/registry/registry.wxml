@@ -1,0 +1,74 @@
+<!--pages/appoint/appoint.wxml-->
+<!-- 页面内容 -->
+<view wx:key="index" class="margin-bottom">
+  <!-- 类型 -->
+  <view class="cu-bar bg-white">
+    <view class="action">
+      <text class="cuIcon-titles text-blue"></text>
+      <text class="text-xl text-bold">请选择具体科室</text>
+    </view>
+  </view>
+  <!-- 选项 -->
+  <view class="radius shadow shadow-lg bg-white cu-list grid col-3">
+    <view wx:for="{{departList}}" wx:for-index="index" wx:for-item="item" wx:key="index" class="cu-item text-center" data-id="{{item.id}}" bindtap="showRegistryModel" style="height: 120rpx;">
+      <view style="display: flex;flex-direction: column;align-items: center;justify-content: center;height: 100%;">
+        <view class="text-sub text-grey text-shadow">{{item.departName}}</view>
+      </view>
+    </view>
+  </view>
+</view>
+
+<!-- 科室详情 -->
+<van-action-sheet show="{{isRegistryModel}}" title="{{selectDepart.departName}}" cancel-text="立即挂号" bind:close="closeRegistryModel" bind:cancel="registry">
+  <scroll-view scroll-y scroll-with-animation enable-back-to-top enhanced fast-deceleration style="height: 60vh;">
+    <!-- 简介和价格 -->
+    <view class="info cu-item shadow margin">
+      <!-- 简介 -->
+      <view class="text-sub text-gray margin-top-sm">{{selectDepart.details}}</view>
+    </view>
+    <!-- 分隔线 -->
+    <van-divider wx:if="{{selectDepart.id!='999'}}" contentPosition="center">今日值班医生</van-divider>
+    <van-divider wx:else contentPosition="center">检查项目</van-divider>
+    <!-- 医生列表 -->
+    <!-- 今日有值班医生 -->
+    <block wx:if="{{selectDepartDoctorList.length != 0}}">
+      <radio-group class="block" bindchange="selectDoctor">
+        <view wx:for="{{selectDepartDoctorList}}" class="cu-form-group">
+          <!-- 医生信息 -->
+          <block wx:if="{{selectDepart.id!='999'}}">
+            <view>
+              <view class="text-lg"><text class="text-black text-bold">{{item.userInfo.realName}}</text> - {{item.rank.rankName}} - <text class="text-red">￥{{item.rank.price}}</text></view>
+              <view class="text-sm margin-top-xs">余量(上午:<text class="text-green">{{item.schedule.remainAm}}</text>, 下午:<text class="text-green">{{item.schedule.remainPm}}</text>)</view>
+            </view>
+          </block>
+          <block wx:else>
+            <view>
+              <view class="text-lg">{{item.rank.rankName}} - <text class="text-red">￥{{item.rank.price}}</text></view>
+            </view>
+          </block>
+          <!-- 选项框 -->
+          <radio value="{{item.id}}" class="radio blue"></radio>
+        </view>
+      </radio-group>
+      <!-- 分隔线 -->
+      <van-divider contentPosition="center">选择挂号时间</van-divider>
+      <!-- 选择预约时间 -->
+      <radio-group class="block selTime" bindchange="selectTime">
+        <!-- 上午 -->
+        <view>
+          <view class="title margin-right-sm">上午</view>
+          <radio value="0" class="blue" checked />
+        </view>
+        <!-- 下午 -->
+        <view>
+          <view class="title margin-right-sm">下午</view>
+          <radio value="1" class="blue" />
+        </view>
+      </radio-group>
+    </block>
+    <!-- 今日无值班医生 -->
+    <block wx:else>
+      <view class="margin-left-xs">今日无值班医生</view>
+    </block>
+  </scroll-view>
+</van-action-sheet>

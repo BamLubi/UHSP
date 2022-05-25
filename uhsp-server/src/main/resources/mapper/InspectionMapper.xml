@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.njtech.uhsp.dao.InspectionDao">
+    <resultMap id="inspectionMap" type="com.njtech.uhsp.entity.Inspection">
+        <id column="id" property="id"/>
+        <result column="registry_id" property="registryId"/>
+        <result column="details" property="details"/>
+        <result column="status" property="status"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="create_time" property="createTime"/>
+        <association property="patient" javaType="com.njtech.uhsp.entity.UserInfo">
+            <id column="patient_id" property="id"/>
+            <result column="real_name" property="realName"/>
+            <result column="age" property="age"/>
+            <result column="sex" property="sex"/>
+        </association>
+        <association property="doctor" javaType="com.njtech.uhsp.entity.Doctor">
+            <id column="doctor_id" property="id"/>
+            <result column="depart_id" property="departId"/>
+            <result column="rank_id" property="rankId"/>
+            <result column="introduce" property="introduce"/>
+        </association>
+    </resultMap>
+
+    <insert id="insert" parameterType="com.njtech.uhsp.entity.Inspection">
+        insert into inspection (id, registry_id, details, status, create_time, update_time)
+        VALUES (#{id}, #{registryId}, #{details}, #{status}, #{createTime}, #{updateTime});
+    </insert>
+
+    <select id="findAll" resultMap="inspectionMap">
+        select inspection.*,
+               ui.id patient_id,
+               ui.real_name,
+               ui.age,
+               ui.sex,
+               d.id  doctor_id,
+               d.depart_id,
+               d.rank_id,
+               d.introduce
+        from inspection
+                 left join registry r on inspection.registry_id = r.id
+                 left join user_info ui on r.patient_id = ui.id
+                 left join doctor d on r.doctor_id = d.id
+        where inspection.status = 0
+        order by create_time ASC
+    </select>
+
+    <update id="update">
+        update inspection
+        set details     = #{details},
+            status      = #{status},
+            update_time = #{updateTime}
+        where inspection.id = #{id}
+    </update>
+
+    <select id="findByPatientId" resultMap="inspectionMap">
+        select inspection.*,
+               ui.id patient_id,
+               ui.real_name,
+               ui.age,
+               ui.sex,
+               d.id  doctor_id,
+               d.depart_id,
+               d.rank_id,
+               d.introduce
+        from inspection
+                 left join registry r on inspection.registry_id = r.id
+                 left join user_info ui on r.patient_id = ui.id
+                 left join doctor d on r.doctor_id = d.id
+        where inspection.status = 1
+          and ui.id = #{patientId}
+        order by create_time ASC
+    </select>
+
+    <delete id="delete">
+        delete from inspection where inspection.id = #{id}
+    </delete>
+</mapper>

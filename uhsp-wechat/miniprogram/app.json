@@ -1,0 +1,60 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/me/me",
+    "pages/registry/registry",
+    "pages/settlement/settlement",
+    "pages/userInfo/userInfo",
+    "pages/pay/pay",
+    "pages/registryList/registryList",
+    "pages/presList/presList",
+    "pages/inspection/inspection",
+    "pages/reimburse/reimburse",
+    "pages/reimburse_pro/reimburse_pro",
+    "pages/stat/stat"
+  ],
+  "window": {
+    "backgroundColor": "#F6F6F6",
+    "backgroundTextStyle": "dark",
+    "navigationBarBackgroundColor": "#2684fe",
+    "navigationBarTitleText": "校医院服务平台",
+    "navigationBarTextStyle": "white"
+  },
+  "tabBar": {
+    "selectedColor": "#2684fe",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "首页",
+        "iconPath": "images/app/index.png",
+        "selectedIconPath": "images/app/indexfill.png"
+      },
+      {
+        "pagePath": "pages/me/me",
+        "text": "个人中心",
+        "iconPath": "images/app/me.png",
+        "selectedIconPath": "images/app/mefill.png"
+      }
+    ]
+  },
+  "subpackages": [
+    {
+      "root": "rootPackage",
+      "name": "root",
+      "pages": [
+        "pages/index/index",
+        "pages/news_manage/news_manage",
+        "pages/inspect_manage/inspect_manage",
+        "pages/reimburse_manage/reimburse_manage"
+      ]
+    },
+    {
+      "root": "doctorPackage",
+      "name": "doctor",
+      "pages": [
+        "pages/diagnose/diagnose"
+      ]
+    }
+  ],
+  "sitemapLocation": "sitemap.json"
+}

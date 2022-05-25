@@ -1,0 +1,70 @@
+<!--doctorPackage/pages/diagnose/diagnose.wxml-->
+<scroll-view scroll-y scroll-with-animation enable-back-to-top enhanced fast-deceleration class="animation-slide-bottom" style="height: 100vh;width: 100vw;">
+  <block wx:if="{{registryList.length!=0}}">
+    <view wx:if="{{registryList.length!=0}}" wx:for="{{registryList}}" wx:key="index" class="order bg-white margin-sm shadow">
+      <view class="left padding-sm">
+        <view class="appoint">
+          <!-- 科室名称 -->
+          <view class="text-xl text-bold text-shadow text-cut" style="color: #2d3436;font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;">
+            {{item.depart.departName}}</view>
+        </view>
+        <!-- 患者姓名 -->
+        <view class="text-black text-sub">患者姓名: {{item.patient.realName}}</view>
+        <!-- 患者年龄 -->
+        <view class="text-black text-sub">患者年龄: {{item.patient.age}}</view>
+        <!-- 患者性别 -->
+        <view class="text-black text-sub">患者性别: {{item.patient.sex == 0 ? '男' : '女'}}</view>
+        <!-- 预约时间 -->
+        <view class="text-black text-sub">时间: {{item.item == 0 ? '上午' : '下午'}}</view>
+        <!-- 分割线 -->
+        <van-divider hairline />
+        <!-- 订单号 -->
+        <view class="order-code">
+          <view class="text-sm text-gray">订单号: {{item.id}}</view>
+          <view class="text-sm text-orange margin-left-xs" data-uuid="{{item.uuid}}" bindtap="copyToClipboard">复制</view>
+        </view>
+        <!-- 订单创立时间 -->
+        <view class="text-sm text-gray">创建时间: {{item.createTime}}</view>
+        <!-- 订单更新时间 -->
+        <view class="text-sm text-gray">更新时间: {{item.updateTime}}</view>
+        <!-- 分割线 -->
+        <van-divider hairline />
+        <!-- 按钮组 -->
+        <view class="button-group">
+          <!-- 问诊按钮 -->
+          <van-button plain icon="contact" type="info" size="small" class="margin-right" data-id="{{item.id}}" bindtap="showDiagModel">问诊</van-button>
+        </view>
+      </view>
+    </view>
+  </block>
+  <!-- 默认页面 -->
+  <view wx:else class="default">
+    <image src="../../../images/default/content.png" mode="aspectFill"></image>
+  </view>
+</scroll-view>
+
+<!-- 问诊详情 -->
+<van-action-sheet show="{{isDiagModel}}" title="患者:{{selectRegistry.patient.realName}}" cancel-text="提交" bind:close="closeDiagModel" bind:cancel="upload">
+  <scroll-view scroll-y scroll-with-animation enable-back-to-top enhanced fast-deceleration style="height: 60vh;">
+    <!-- 医嘱 -->
+    <form>
+      <view class="cu-form-group align-start">
+        <view class="title text-black text-bold">医嘱:</view>
+        <textarea value="{{details}}" placeholder="请输入医嘱" class="text-gray" bindinput="detailsInput"></textarea>
+      </view>
+    </form>
+    <!-- 药品 -->
+    <van-divider contentPosition="center">药品</van-divider>
+    <scroll-view scroll-y scroll-with-animation enable-back-to-top enhanced fast-deceleration style="height: 35vh;">
+      <checkbox-group bindchange="checkboxChange">
+        <view wx:for="{{drugList}}" wx:key="index" class="cu-form-group">
+          <view>
+            <view>{{item.drugName}} ￥{{item.price}}/{{item.unit}}</view>
+            <view>{{item.details}}</view>
+          </view>
+          <checkbox value="{{item.id}}" />
+        </view>
+      </checkbox-group>
+    </scroll-view>
+  </scroll-view>
+</van-action-sheet>

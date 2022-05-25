@@ -1,0 +1,18 @@
+/* pages/userInfo/userInfo.wxss */
+input{
+  text-align: right;
+}
+
+.btn-group{
+  position: fixed;
+  bottom: 5vw;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  width: 100vw;
+  z-index: 999;
+}
+
+.btn-group view{
+  width: 40vw;
+}

@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.njtech.uhsp.dao.PrescriptionDao">
+    <resultMap id="prescriptionMap" type="com.njtech.uhsp.entity.Prescription">
+        <id column="id" property="id"/>
+        <result column="registry_id" property="registryId"/>
+        <result column="details" property="details"/>
+        <result column="drugs" property="drugs"/>
+        <result column="price" property="price"/>
+        <result column="status" property="status"/>
+        <result column="charge_time" property="chargeTime"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_time" property="updateTime"/>
+        <association property="depart" javaType="com.njtech.uhsp.entity.Depart">
+            <id column="depart_id" property="id"/>
+            <result column="depart_name" property="departName"/>
+        </association>
+        <association property="doctor" javaType="com.njtech.uhsp.entity.UserInfo">
+            <id column="doctor_id" property="id"/>
+            <result column="real_name" property="realName"/>
+        </association>
+        <association property="rank" javaType="com.njtech.uhsp.entity.Rank">
+            <id column="rank_id" property="id"/>
+            <result column="rank_name" property="rankName"/>
+        </association>
+    </resultMap>
+
+    <insert id="insert" parameterType="com.njtech.uhsp.entity.Prescription">
+        insert into prescription (id, patient_id, registry_id, details, drugs, price, status, charge_time, create_time, update_time)
+        values (#{id}, #{patientId}, #{registryId}, #{details}, #{drugs}, #{price}, #{status}, #{chargeTime}, #{createTime}, #{updateTime});
+    </insert>
+
+    <select id="findList" resultMap="prescriptionMap">
+        select
+        prescription.*,
+        user_info.id doctor_id, user_info.real_name,
+        depart.id depart_id, depart.depart_name,
+        `rank`.id rank_id, `rank`.rank_name
+        from prescription
+        left join registry on prescription.registry_id = registry.id
+        left join depart on registry.depart_id = depart.id
+        left join user_info on registry.doctor_id = user_info.id
+        left join doctor on registry.doctor_id = doctor.id
+        left join `rank` on doctor.rank_id = `rank`.id
+        <where>
+            prescription.patient_id = #{patientId}
+            <if test="status!=null">
+                and prescription.status = #{status}
+            </if>
+        </where>
+        order by registry.status ASC
+    </select>
+
+    <update id="update">
+        update prescription
+        set status      = #{status},
+            charge_time = #{chargeTime},
+            update_time = #{updateTime}
+        where prescription.id = #{id}
+    </update>
+
+    <delete id="delete">
+        delete from prescription where prescription.id = #{id}
+    </delete>
+</mapper>

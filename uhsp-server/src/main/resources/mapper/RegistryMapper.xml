@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.njtech.uhsp.dao.RegistryDao">
+    <resultMap id="registryMap" type="com.njtech.uhsp.entity.Registry">
+        <id column="id" property="id"/>
+        <result column="patient_id" property="patientId"/>
+        <result column="doctor_id" property="doctorId"/>
+        <result column="depart_id" property="departId"/>
+        <result column="time" property="time"/>
+        <result column="status" property="status"/>
+        <result column="register_fee" property="registerFee"/>
+        <result column="charge_time" property="chargeTime"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_time" property="updateTime"/>
+        <association property="depart" javaType="com.njtech.uhsp.entity.Depart">
+            <id column="depart_id" property="id"/>
+            <result column="depart_name" property="departName"/>
+        </association>
+        <association property="doctor" javaType="com.njtech.uhsp.entity.UserInfo">
+            <id column="doctor_id" property="id"/>
+            <result column="real_name" property="realName"/>
+        </association>
+        <association property="patient" javaType="com.njtech.uhsp.entity.UserInfo">
+            <id column="patient_id" property="id"/>
+            <result column="real_name" property="realName"/>
+            <result column="age" property="age"/>
+            <result column="sex" property="sex"/>
+        </association>
+        <association property="rank" javaType="com.njtech.uhsp.entity.Rank">
+            <id column="rank_id" property="id"/>
+            <result column="rank_name" property="rankName"/>
+        </association>
+    </resultMap>
+
+    <insert id="insert" parameterType="com.njtech.uhsp.entity.Registry">
+        insert into registry (id, patient_id, doctor_id, depart_id, time, status, register_fee, charge_time,
+                              create_time, update_time)
+        values (#{id}, #{patientId}, #{doctorId}, #{departId}, #{time}, #{status}, #{registerFee}, #{chargeTime},
+                #{createTime}, #{updateTime});
+    </insert>
+
+    <select id="findById" resultType="com.njtech.uhsp.entity.Registry">
+        select registry.*
+        from registry
+        where registry.id = #{id}
+    </select>
+
+    <select id="findList" resultMap="registryMap">
+        select
+        registry.*,
+        user_info.id doctor_id, user_info.real_name,
+        depart.id depart_id, depart.depart_name,
+        `rank`.id rank_id, `rank`.rank_name
+        from registry
+        left join depart on registry.depart_id = depart.id
+        left join user_info on registry.doctor_id = user_info.id
+        left join doctor on registry.doctor_id = doctor.id
+        left join `rank` on doctor.rank_id = `rank`.id
+        <where>
+            registry.patient_id = #{patientId}
+            <if test="status!=null">
+                and registry.status = #{status}
+            </if>
+        </where>
+        order by registry.status ASC
+    </select>
+
+    <update id="update">
+        update registry
+        set status      = #{status},
+            charge_time = #{chargeTime},
+            update_time = #{updateTime}
+        where registry.id = #{id}
+    </update>
+
+    <delete id="delete">
+        delete from registry where registry.id = #{id}
+    </delete>
+
+    <select id="findListDoctor" resultMap="registryMap">
+        select
+        registry.*,
+        user_info.id patient_id, user_info.real_name, user_info.age, user_info.sex,
+        depart.id depart_id, depart.depart_name
+        from registry
+        left join depart on registry.depart_id = depart.id
+        left join user_info on registry.patient_id = user_info.id
+        <where>
+            registry.doctor_id = #{doctorId}
+            and registry.status = 1
+        </where>
+        order by registry.create_time ASC
+    </select>
+
+</mapper>

@@ -1,0 +1,39 @@
+<!--pages/index/index.wxml-->
+<!-- 顶部轮播 -->
+<swiper class="screen-swiper square-dot" indicator-dots="true" circular="true" autoplay="true" interval="5000" duration="500">
+  <swiper-item wx:for="{{swiper_list}}" wx:key="index">
+    <image src="{{item}}" mode="scaleToFill" lazy-load></image>
+  </swiper-item>
+</swiper>
+
+<!-- 工具栏 -->
+<view class="tools radius margin shadow shadow-lg bg-white cu-list grid col-4 ">
+  <view wx:for="{{naviagteList}}" wx:if="{{userType >= item.user}}" wx:key="index" class="cu-item" data-path="{{item.path}}" data-type="{{item.type}}" bindtap="navigatePage">
+    <view>
+      <image src="{{item.src}}"></image>
+    </view>
+    <view class="text-sub text-shadow">{{item.name}}</view>
+  </view>
+</view>
+
+<!-- 精品活动 -->
+<view class="cu-bar bg-white">
+  <view class="action">
+    <text class="cuIcon-titles text-blue"></text>
+    <text class="text-xl text-bold">公告</text>
+  </view>
+</view>
+
+<!-- 活动 -->
+<view class="cu-card article no-card">
+  <view wx:for="{{news}}" wx:key="index" class="cu-item shadow">
+    <view class="title">
+      <view class="text-cut">{{item.title}}</view>
+    </view>
+    <view class="content">
+      <view class="desc">
+        <view class="text-content">{{item.details}}</view>
+      </view>
+    </view>
+  </view>
+</view>

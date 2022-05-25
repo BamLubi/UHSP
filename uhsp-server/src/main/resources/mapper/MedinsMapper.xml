@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.njtech.uhsp.dao.MedinsDao">
+    <resultMap id="medinsMap" type="com.njtech.uhsp.entity.Medins">
+        <id column="id" property="id"/>
+        <result column="user_id" property="userId"/>
+        <result column="prescription_id" property="prescriptionId"/>
+        <result column="price" property="price"/>
+        <result column="status" property="status"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_time" property="updateTime"/>
+        <association property="prescription" javaType="com.njtech.uhsp.entity.Prescription">
+            <id column="prescription_id" property="id"/>
+            <result column="drugs" property="drugs"/>
+        </association>
+    </resultMap>
+
+    <insert id="insert" parameterType="com.njtech.uhsp.entity.Medins">
+        insert into medins (id, user_id, prescription_id, price, status, create_time, update_time)
+        VALUES (#{id}, #{userId}, #{prescriptionId}, #{price}, #{status}, #{createTime}, #{updateTime});
+    </insert>
+
+    <select id="findList" resultMap="medinsMap">
+        select medins.*, p.id prescription_id, p.drugs
+        from medins
+        left join prescription p on medins.prescription_id = p.id
+        <where>
+            1
+            <if test="id!=null">
+                and medins.id = #{id}
+            </if>
+            <if test="userId!=null">
+                and medins.user_id = #{userId}
+            </if>
+            <if test="status!=null">
+                and medins.status = #{status}
+            </if>
+        </where>
+        order by medins.create_time DESC
+    </select>
+
+    <update id="update">
+        update medins
+        set status = #{status}
+        where medins.id = #{id}
+    </update>
+</mapper>

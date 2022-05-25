@@ -1,0 +1,41 @@
+<!--pages/reimburse_pro/reimburse_pro.wxml-->
+<scroll-view scroll-y scroll-with-animation enable-back-to-top enhanced fast-deceleration class="animation-slide-bottom" style="height: 90vh;width: 100vw;">
+  <block wx:if="{{prescriptionList.length!=0}}">
+    <view wx:for="{{prescriptionList}}" wx:key="index" class="order bg-white margin-sm shadow">
+      <view class="left padding-sm">
+        <view class="appoint">
+          <!-- 科室名称 -->
+          <view class="text-sub text-bold text-shadow text-cut" style="color: #2d3436;font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;">
+            报销单号:{{item.id}}</view>
+        </view>
+        <!-- 分割线 -->
+        <van-divider hairline />
+        <!-- 药品信息 -->
+        <view class="text-black text-sub">药品: {{item.prescription.drugs}}</view>
+        <!-- 支付金额 -->
+        <view class="price">
+          <view class="text-sub text-black">药品费用: </view>
+          <view class="text-price text-red text-xl margin-left-xs">{{item.price}}</view>
+        </view>
+        <!-- 分割线 -->
+        <van-divider hairline />
+        <!-- 处方号 -->
+        <view class="order-code">
+          <view class="text-sm text-gray">处方号: {{item.prescription.id}}</view>
+          <view class="text-sm text-orange margin-left-xs" data-uuid="{{item.uuid}}" bindtap="copyToClipboard">复制</view>
+        </view>
+        <!-- 订单创立时间 -->
+        <view class="text-sm text-gray">创建时间: {{item.createTime}}</view>
+        <!-- 订单更新时间 -->
+        <view class="text-sm text-gray">更新时间: {{item.updateTime}}</view>
+      </view>
+      <!-- 订单状态 -->
+      <view wx:if="{{item.status==0}}" class="right text-center text-white bg-red">报销中</view>
+      <view wx:if="{{item.status==1}}" class="right text-center text-white bg-green">报销成功</view>
+    </view>
+  </block>
+  <!-- 默认页面 -->
+  <view wx:else class="default">
+    <image src="../../images/default/content.png" mode="aspectFill"></image>
+  </view>
+</scroll-view>

@@ -1,0 +1,10 @@
+{
+  "navigationBarTitleText": "医保报销",
+  "usingComponents": {
+    "van-notice-bar": "../../components/vantui/notice-bar/index",
+    "van-collapse": "../../components/vantui/collapse/index",
+    "van-collapse-item": "../../components/vantui/collapse-item/index",
+    "van-divider": "../../components/vantui/divider/index",
+    "van-button": "../../components/vantui/button/index"
+  }
+}
