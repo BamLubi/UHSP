@@ -26,4 +26,10 @@ public class NewsController {
     public List<News> findAll(){
         return newsService.findAll();
     }
+
+    @PostMapping("/delete")
+    public Result<Void> delete(@RequestBody News news){
+        newsService.delete(news);
+        return Result.SUCCESS_RESULT;
+    }
 }

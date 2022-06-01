@@ -13,4 +13,8 @@
         FROM news
         ORDER BY create_time DESC
     </select>
+
+    <delete id="delete">
+        delete from news where news.id = #{id}
+    </delete>
 </mapper>
