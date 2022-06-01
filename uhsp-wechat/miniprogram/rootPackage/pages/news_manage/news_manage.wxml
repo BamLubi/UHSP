@@ -1,25 +1,49 @@
 <!--rootPackage/pages/news_manage/news_manage.wxml-->
-<form>
-  <view class="cu-form-group margin-top">
-    <view class="title">标题</view>
-    <input value="{{title}}" placeholder="请输入标题" bindinput="titleInput"></input>
-  </view>
-  <view class="cu-form-group align-start">
-    <view class="title">内容</view>
-    <textarea value="{{content}}" placeholder="请输入内容" bindinput="contentInput"></textarea>
-  </view>
-  <view class="cu-form-group margin-top">
-    <view class="title">类型</view>
-    <picker value="{{index}}" range="{{picker}}" bindchange="pickerChange">
-      <view class="picker">
-        {{picker[index]}}
+<!-- 新闻列表 -->
+<view class="cu-card article card">
+  <view wx:for="{{news}}" wx:key="index" class="cu-item shadow">
+    <!-- 标题 -->
+    <view class="title">
+      <view class="text-cut text-sub">{{item.title}}</view>
+    </view>
+    <!-- 内容 -->
+    <view class="content">
+      <view class="desc text-grey">
+        <view>创建时间:{{item.createTime}}</view>
+        <view>修改时间:{{item.updateTime}}</view>
       </view>
-    </picker>
+    </view>
+    <!-- 按钮组 -->
+    <view class="button-group">
+      <!-- 取消按钮 -->
+      <van-button plain icon="cross" type="default" size="small" class="margin-right" data-id="{{item.id}}" data-title="{{item.title}}" bindtap="delNews">删除公告</van-button>
+    </view>
   </view>
-  <!-- 按钮组 -->
-  <view class="btn-group">
-    <view class="cu-btn shadow bg-blue lg round" bindtap="confirm">确认</view>
-    <view class="cu-btn shadow bg-green lg round" bindtap="confirm">取消</view>
-  </view>
+</view>
 
-</form>
+<!-- 固定新增按钮 -->
+<van-button class="add-btn" round type="info" icon="plus" bindtap="showNewsModel"></van-button>
+
+<!-- 新增新闻模态框 -->
+<van-action-sheet show="{{isNewsModel}}" title="新增公告" cancel-text="提交" bind:close="closeNewsModel" bind:cancel="confirm">
+  <scroll-view scroll-y scroll-with-animation enable-back-to-top enhanced fast-deceleration style="height: 60vh;">
+    <form>
+      <view class="cu-form-group margin-top">
+        <view class="title">标题</view>
+        <input value="{{title}}" placeholder="请输入标题" bindinput="titleInput"></input>
+      </view>
+      <view class="cu-form-group align-start">
+        <view class="title">内容</view>
+        <textarea value="{{content}}" placeholder="请输入内容" bindinput="contentInput"></textarea>
+      </view>
+      <view class="cu-form-group margin-top">
+        <view class="title">类型</view>
+        <picker value="{{index}}" range="{{picker}}" bindchange="pickerChange">
+          <view class="picker">
+            {{picker[index]}}
+          </view>
+        </picker>
+      </view>
+    </form>
+  </scroll-view>
+</van-action-sheet>

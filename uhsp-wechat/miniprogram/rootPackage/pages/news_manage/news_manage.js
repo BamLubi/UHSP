@@ -1,5 +1,6 @@
 // rootPackage/pages/news_manage/news_manage.js
 const API = require("../../../promise/wxAPI.js")
+const Util = require("../../../utils/util.js")
 Page({
 
   /**
@@ -10,14 +11,16 @@ Page({
     content: "",
     type: 0,
     picker: ["公告", "健康知识"],
-    index: 0
+    index: 0,
+    news: [],
+    isNewsModel: false
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad(options) {
-
+    this.getNews();
   },
 
   /**
@@ -82,7 +85,25 @@ Page({
   contentInput(e) {
     this.data.content = e.detail.value;
   },
+  
+  // 获取新闻列表
+  getNews() {
+    let that = this;
+    // 获取新闻列表
+    let url = "http://localhost:8080/news";
+    API.Request(url, {}, "GET", "获取公告")
+      .then(res => {
+        res.filter(x => {
+          x.createTime = Util.formatTime(new Date(x.createTime));
+          x.updateTime = Util.formatTime(new Date(x.updateTime));
+        })
+        that.setData({
+          news: res
+        })
+      })
+  },
 
+  // 提交
   confirm() {
     let that = this;
     // 显示loading
@@ -104,9 +125,8 @@ Page({
           throw Error("服务端插新增失败");
         }
       }).then(res => {
-        wx.navigateBack({
-          delta: 0
-        })
+        that.closeNewsModel();
+        that.getNews();
       })
       .catch(err => {
         console.log("新增公告失败", err);
@@ -116,9 +136,45 @@ Page({
       })
   },
 
-  cancel() {
-    wx.navigateBack({
-      delta: 0,
+  // 删除新闻
+  delNews(e) {
+    let that = this;
+    let id = e.currentTarget.dataset.id;
+    let title = e.currentTarget.dataset.title;
+    API.ShowModal("确认删除", `请确认是否删除标题《${title}》的公告吗？`)
+      .then(res => {
+        let url = "http://localhost:8080/news/delete";
+        // 显示loading
+        wx.showLoading({
+          title: '删除中'
+        })
+        return API.Request(url, {
+          "id": id
+        }, "POST", "删除公告")
+      }, res => {
+
+      })
+      .then(res => {
+        // 显示成功样式
+        wx.hideLoading().then(() => {
+          API.ShowToast('删除成功', 'success');
+          that.getNews();
+        });
+      })
+  },
+
+  // 显示模态框
+  showNewsModel() {
+    let that = this;
+    that.setData({
+      isNewsModel: true
     })
-  }
+  },
+  
+  // 关闭模态框
+  closeNewsModel() {
+    this.setData({
+      isNewsModel: false
+    })
+  },
 })
