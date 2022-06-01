@@ -65,6 +65,7 @@ public class RegistryController {
                 // 为inspection表添加信息
                 Inspection inspection = new Inspection();
                 inspection.setRegistryId(tmp.getId());
+                inspection.setStatus(0);
                 inspectionService.save(inspection);
             }
         }
