@@ -11,7 +11,7 @@
  Target Server Version : 50738
  File Encoding         : 65001
 
- Date: 23/05/2022 22:45:50
+ Date: 01/06/2022 14:05:34
 */
 
 SET NAMES utf8mb4;
@@ -136,7 +136,7 @@ CREATE TABLE `medins`  (
 -- ----------------------------
 -- Records of medins
 -- ----------------------------
-INSERT INTO `medins` VALUES ('81f270e7a14a4959be08d561cc0c7b4b', '8e38226437584022ad5aee997a8f459a', NULL, 22.00, 1, '2022-05-21 07:07:03', '2022-05-21 07:07:03');
+INSERT INTO `medins` VALUES ('81f270e7a14a4959be08d561cc0c7b4b', NULL, NULL, 22.00, 1, '2022-05-21 07:07:03', '2022-05-21 07:07:03');
 
 -- ----------------------------
 -- Table structure for news
@@ -229,14 +229,6 @@ CREATE TABLE `registry`  (
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '挂号表\r\n通过挂号表id可以查询相应的检查单和处方表等信息，一对多\r\n挂号状态：0未付款、1付款' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
--- Records of registry
--- ----------------------------
-INSERT INTO `registry` VALUES ('7663a498c0ef4ec5888679c164ae38cb', '8e38226437584022ad5aee997a8f459a', '202205141636001', '0', 1, 0, 10.00, NULL, '2022-05-23 14:43:13', '2022-05-23 14:43:13');
-INSERT INTO `registry` VALUES ('b7b837a0dd0a48cca7fb9b15e890be4c', '8e38226437584022ad5aee997a8f459a', '202205232232003', '1', 0, 0, 20.00, NULL, '2022-05-23 14:42:49', '2022-05-23 14:42:49');
-INSERT INTO `registry` VALUES ('baf33c7c057f439980b555715cb05b01', '8e38226437584022ad5aee997a8f459a', '202205232234004', '5', 0, 0, 15.00, NULL, '2022-05-23 14:43:04', '2022-05-23 14:43:04');
-INSERT INTO `registry` VALUES ('f6a7f8fd27444abb871567d231f18046', '8e38226437584022ad5aee997a8f459a', '202205141636001', '0', 0, 0, 10.00, NULL, '2022-05-23 14:32:04', '2022-05-23 14:32:04');
-
--- ----------------------------
 -- Table structure for schedule
 -- ----------------------------
 DROP TABLE IF EXISTS `schedule`;
@@ -300,7 +292,7 @@ CREATE TABLE `stat`  (
 -- Records of stat
 -- ----------------------------
 INSERT INTO `stat` VALUES ('3695c1e14eb74df3af4dc16e49850b92', '口腔科', NULL, 0, 1.0000, '2022-05-23 14:43:04', '2022-05-23 14:43:04');
-INSERT INTO `stat` VALUES ('8ae1243793154b10abaa1b0cadc90da2', '内科', NULL, 0, 2.0000, '2022-05-23 14:32:04', '2022-05-23 14:43:13');
+INSERT INTO `stat` VALUES ('8ae1243793154b10abaa1b0cadc90da2', '内科', NULL, 0, 3.0000, '2022-05-23 14:32:04', '2022-06-01 05:50:48');
 INSERT INTO `stat` VALUES ('aff40d0680374cdb8ad3785e2d094872', '外科', NULL, 0, 1.0000, '2022-05-23 14:42:49', '2022-05-23 14:42:49');
 
 -- ----------------------------
@@ -332,7 +324,6 @@ INSERT INTO `user_info` VALUES ('202205141636001', '12345673', '2134', '12324', 
 INSERT INTO `user_info` VALUES ('202205181245002', '1231231', '124241231', '1314', 'lisi', '李四', 1, 42, 0, NULL, NULL, '2022-05-18 12:46:22', '2022-05-18 12:46:24');
 INSERT INTO `user_info` VALUES ('202205232232003', '1231234', '2314123', '1412123', 'wangwu', '王五', 1, 56, 1, NULL, NULL, '2022-05-23 22:33:22', '2022-05-23 22:33:24');
 INSERT INTO `user_info` VALUES ('202205232234004', '124123', '141215', '123154213', 'zhaoliu', '赵六', 1, 42, 1, NULL, NULL, NULL, NULL);
-INSERT INTO `user_info` VALUES ('8e38226437584022ad5aee997a8f459a', '13246798987654', 'oYoPa5PbrlDG65BCaI9qoEwLYE9E', '131975364821346', '小陆斑比', '陆于洋', 2, 23, 0, '13616546215', '测试地址XXXXX', '2022-05-16 12:55:07', '2022-05-16 14:00:31');
 
 -- ----------------------------
 -- Function structure for reset_remain
